@@ -5356,4 +5356,4 @@ mqf2 = ["cpflows"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "af4270cff042bc7dff8b9cb7d7bc2a5527ec4d0ebdfdd000aabfc4e322526655"
+content-hash = "01d51d3df56cd09a39f4fec6034af3bc3b1fbc337b28f9e8c5b23572c3109c36"

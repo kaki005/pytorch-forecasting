@@ -1,60 +1,51 @@
 """
 Timeseries models share a number of common characteristics. This module implements these in a common base class.
 """
-from collections import namedtuple
 import copy
-from copy import deepcopy
 import inspect
 import logging
 import os
-from typing import Any, Callable, Dict, Iterable, List, Literal, Optional, Tuple, Union
 import warnings
+from collections import namedtuple
+from copy import deepcopy
+from typing import (Any, Callable, Dict, Iterable, List, Literal, Optional,
+                    Tuple, Union)
 
 import lightning.pytorch as pl
-from lightning.pytorch import LightningModule, Trainer
-from lightning.pytorch.callbacks import BasePredictionWriter, LearningRateFinder
-from lightning.pytorch.trainer.states import RunningStage
-from lightning.pytorch.utilities.parsing import AttributeDict, get_init_args
 import matplotlib.pyplot as plt
 import numpy as np
-from numpy.lib.function_base import iterable
 import pandas as pd
 import pytorch_optimizer
-from pytorch_optimizer import Ranger21
 import scipy.stats
 import torch
 import torch.nn as nn
+import yaml
+from lightning.pytorch import LightningModule, Trainer
+from lightning.pytorch.callbacks import (BasePredictionWriter,
+                                         LearningRateFinder)
+from lightning.pytorch.trainer.states import RunningStage
+from lightning.pytorch.utilities.parsing import AttributeDict, get_init_args
+from numpy import iterable
+from pytorch_forecasting.data import TimeSeriesDataSet
+from pytorch_forecasting.data.encoders import (EncoderNormalizer,
+                                               GroupNormalizer,
+                                               MultiNormalizer,
+                                               NaNLabelEncoder)
+from pytorch_forecasting.metrics import (
+    MAE, MASE, SMAPE, DistributionLoss, MultiHorizonMetric, MultiLoss,
+    QuantileLoss, convert_torchmetric_to_pytorch_forecasting_metric)
+from pytorch_forecasting.metrics.base_metrics import Metric
+from pytorch_forecasting.models.nn.embeddings import MultiEmbedding
+from pytorch_forecasting.utils import (InitialParameterRepresenterMixIn,
+                                       OutputMixIn, TupleOutputMixIn,
+                                       apply_to_list, concat_sequences,
+                                       create_mask, get_embedding_size,
+                                       groupby_apply, to_list)
+from pytorch_optimizer import Ranger21
 from torch.nn.utils import rnn
 from torch.optim.lr_scheduler import LambdaLR, ReduceLROnPlateau
 from torch.utils.data import DataLoader
 from tqdm.autonotebook import tqdm
-import yaml
-
-from pytorch_forecasting.data import TimeSeriesDataSet
-from pytorch_forecasting.data.encoders import EncoderNormalizer, GroupNormalizer, MultiNormalizer, NaNLabelEncoder
-from pytorch_forecasting.metrics import (
-    MAE,
-    MASE,
-    SMAPE,
-    DistributionLoss,
-    MultiHorizonMetric,
-    MultiLoss,
-    QuantileLoss,
-    convert_torchmetric_to_pytorch_forecasting_metric,
-)
-from pytorch_forecasting.metrics.base_metrics import Metric
-from pytorch_forecasting.models.nn.embeddings import MultiEmbedding
-from pytorch_forecasting.utils import (
-    InitialParameterRepresenterMixIn,
-    OutputMixIn,
-    TupleOutputMixIn,
-    apply_to_list,
-    concat_sequences,
-    create_mask,
-    get_embedding_size,
-    groupby_apply,
-    to_list,
-)
 
 # todo: compile models
 

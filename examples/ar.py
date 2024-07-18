@@ -1,18 +1,19 @@
-from pathlib import Path
+import os
 import pickle
 import warnings
+from pathlib import Path
 
 import lightning.pytorch as pl
+import numpy as np
+import pandas as pd
+import torch
 from lightning.pytorch.callbacks import EarlyStopping, LearningRateMonitor
 from lightning.pytorch.loggers import TensorBoardLogger
 from lightning.pytorch.tuner import Tuner
-import numpy as np
-import pandas as pd
-from pandas.core.common import SettingWithCopyWarning
-import torch
-
-from pytorch_forecasting import EncoderNormalizer, GroupNormalizer, TimeSeriesDataSet
-from pytorch_forecasting.data import NaNLabelEncoder
+from pandas.errors import SettingWithCopyWarning
+# from pytorch_forecasting import GroupNormalizer, TimeSeriesDataSet
+from pytorch_forecasting.data import (GroupNormalizer, NaNLabelEncoder,
+                                      TimeSeriesDataSet)
 from pytorch_forecasting.data.examples import generate_ar_data
 from pytorch_forecasting.metrics import NormalDistributionLoss
 from pytorch_forecasting.models.deepar import DeepAR
@@ -116,7 +117,7 @@ trainer.fit(
 # calcualte mean absolute error on validation set
 actuals = torch.cat([y for x, (y, weight) in iter(val_dataloader)])
 predictions = deepar.predict(val_dataloader)
-print(f"Mean absolute error of model: {(actuals - predictions).abs().mean()}")
+print(f"Mean absolute error of model: {(actuals.cpu() - torch.tensor(predictions).cpu()).abs().mean()}")
 
 # # plot actual vs. predictions
 # raw_predictions, x = deepar.predict(val_dataloader, mode="raw", return_x=True)

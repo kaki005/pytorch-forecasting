@@ -1,63 +1,24 @@
 """
 PyTorch Forecasting package for timeseries forecasting with PyTorch.
 """
-from pytorch_forecasting.data import (
-    EncoderNormalizer,
-    GroupNormalizer,
-    MultiNormalizer,
-    NaNLabelEncoder,
-    TimeSeriesDataSet,
-)
-from pytorch_forecasting.metrics import (
-    MAE,
-    MAPE,
-    MASE,
-    RMSE,
-    SMAPE,
-    BetaDistributionLoss,
-    CrossEntropy,
-    DistributionLoss,
-    ImplicitQuantileNetworkDistributionLoss,
-    LogNormalDistributionLoss,
-    MQF2DistributionLoss,
-    MultiHorizonMetric,
-    MultiLoss,
-    MultivariateNormalDistributionLoss,
-    NegativeBinomialDistributionLoss,
-    NormalDistributionLoss,
-    PoissonLoss,
-    QuantileLoss,
-)
-from pytorch_forecasting.models import (
-    GRU,
-    LSTM,
-    AutoRegressiveBaseModel,
-    AutoRegressiveBaseModelWithCovariates,
-    Baseline,
-    BaseModel,
-    BaseModelWithCovariates,
-    DecoderMLP,
-    DeepAR,
-    MultiEmbedding,
-    NBeats,
-    NHiTS,
-    RecurrentNetwork,
-    TemporalFusionTransformer,
-    get_rnn,
-)
-from pytorch_forecasting.utils import (
-    apply_to_list,
-    autocorrelation,
-    create_mask,
-    detach,
-    get_embedding_size,
-    groupby_apply,
-    integer_histogram,
-    move_to_device,
-    profile,
-    to_list,
-    unpack_sequence,
-)
+from .data import (EncoderNormalizer, GroupNormalizer, MultiNormalizer,
+                   NaNLabelEncoder, TimeSeriesDataSet)
+from .metrics import (MAE, MAPE, MASE, RMSE, SMAPE, BetaDistributionLoss,
+                      CrossEntropy, DistributionLoss,
+                      ImplicitQuantileNetworkDistributionLoss,
+                      LogNormalDistributionLoss, MQF2DistributionLoss,
+                      MultiHorizonMetric, MultiLoss,
+                      MultivariateNormalDistributionLoss,
+                      NegativeBinomialDistributionLoss, NormalDistributionLoss,
+                      PoissonLoss, QuantileLoss)
+from .models import (GRU, LSTM, AutoRegressiveBaseModel,
+                     AutoRegressiveBaseModelWithCovariates, Baseline,
+                     BaseModel, BaseModelWithCovariates, DecoderMLP, DeepAR,
+                     MultiEmbedding, NBeats, NHiTS, RecurrentNetwork,
+                     TemporalFusionTransformer, get_rnn)
+from .utils import (apply_to_list, autocorrelation, create_mask, detach,
+                    get_embedding_size, groupby_apply, integer_histogram,
+                    move_to_device, profile, to_list, unpack_sequence)
 
 __all__ = [
     "TimeSeriesDataSet",
