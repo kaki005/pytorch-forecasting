@@ -71,6 +71,7 @@ fastapi = ">=0.80"
 pytorch-optimizer = "^2.5.1"
 numpy = "^2.0.0"
 tensorboard = "^2.17.0"
+pmdarima = "^2.0.4"
 
 [tool.poetry.group.dev.dependencies]
 pydocstyle = "^6.1.1"
