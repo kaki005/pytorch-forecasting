@@ -77,7 +77,7 @@ setuptools = "^71.0.0"
 [tool.poetry.group.dev.dependencies]
 pydocstyle = "^6.1.1"
 # checks and make tools
-pre-commit = "^3.2.0"
+pre-commit = ">=3.2,<5.0"
 
 invoke = "*"
 flake8 = "*"
